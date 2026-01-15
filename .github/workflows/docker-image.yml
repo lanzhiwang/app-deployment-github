@@ -11,9 +11,9 @@ name: Publish Docker image
 
 on:
   push:
-    branches: ["taichu_training"]
+    branches: ["main"]
   pull_request:
-    branches: ["taichu_training"]
+    branches: ["main"]
 
 jobs:
   push_to_registry:
@@ -38,7 +38,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: lanzhiwang/down_model
+          images: lanzhiwang/training_tool_model
           tags: |
             type=ref,event=branch
             type=ref,event=pr
