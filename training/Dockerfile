@@ -37,7 +37,7 @@ RUN set -eux; \
     # 安装 Python 依赖
     pip install --upgrade pip; \
     # 注意：modelscope 依赖较多, 建议根据实际需求安装其子模块
-    pip install modelscope==1.33.0 nacos-sdk-python==3.0.2 black==25.12.0; \
+    pip install modelscope==1.33.0 nacos-sdk-python==3.0.2 PyYAML==6.0.3 black==25.12.0; \
     \
     # 清理不再需要的系统工具和 apt 缓存
     apt-get purge -y --auto-remove curl unzip; \
