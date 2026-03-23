@@ -38,7 +38,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: lanzhiwang/training_tool_model
+          images: lanzhiwang/jupyter-12.1.0-cudnn8-devel-ubuntu22.04
           tags: |
             type=ref,event=branch
             type=ref,event=pr
