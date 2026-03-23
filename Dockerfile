@@ -53,5 +53,7 @@ RUN set -x && \
     echo "conda activate base" >> ~/.bashrc && \
     find /opt/conda/ -follow -type f -name '*.a' -delete && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
+    /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab && \
     /opt/conda/bin/conda clean -afy
