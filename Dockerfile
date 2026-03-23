@@ -13,10 +13,13 @@ RUN apt-get update -q && \
     libxext6 \
     libxrender1 \
     mercurial \
-    openssh-client \
     procps \
     subversion \
     wget \
+    vim \
+    openssh-client \
+    openssh-server \
+    systemd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -56,4 +59,6 @@ RUN set -x && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab && \
-    /opt/conda/bin/conda clean -afy
+    /opt/conda/bin/conda clean -afy && \
+    mkdir -p /run/sshd && \
+    chmod 0755 /run/sshd
