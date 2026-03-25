@@ -58,7 +58,8 @@ RUN set -x && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
-    /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab torch torchvision torchaudio && \
+    /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab && \
+    /opt/conda/bin/conda install -n base --yes pytorch torchvision torchaudio -c pytorch -c nvidia && \
     /opt/conda/bin/conda clean -afy && \
     mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
