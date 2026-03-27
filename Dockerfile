@@ -70,3 +70,14 @@ RUN set -x && apt-get update -q && \
 # -e MKL_NUM_THREADS=1 \
 # -e OPENBLAS_NUM_THREADS=1 \
 # pytorch/pytorch:2.5.1-cuda12.1-cudnn9-devel bash
+
+# docker run -ti --rm \
+# --gpus '"device=6, 7"' \
+# --ulimit memlock=-1:-1 \
+# --ulimit stack=67108864 \
+# --security-opt seccomp=unconfined \
+# -e NVIDIA_DRIVER_CAPABILITIES=all \
+# -e OMP_NUM_THREADS=1 \
+# -e MKL_NUM_THREADS=1 \
+# -e OPENBLAS_NUM_THREADS=1 \
+# lanzhiwang/jupyter-12.1.0-cudnn8-devel-ubuntu22.04:sha-7bd2302 bash
