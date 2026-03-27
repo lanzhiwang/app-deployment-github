@@ -57,7 +57,7 @@ RUN set -x && apt-get update -q && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab && \
-    /opt/conda/bin/pip install --index-url https://download.pytorch.org/whl/cu121/ torch torchvision torchaudio && \
+    /opt/conda/bin/pip install --index-url https://download.pytorch.org/whl/cu121 torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 && \
     /opt/conda/bin/pip cache purge && \
     /opt/conda/bin/conda clean -afy && \
     mkdir -p /run/sshd && \
