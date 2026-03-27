@@ -1,3 +1,4 @@
+# FRPM pytorch/pytorch:2.5.1-cuda12.1-cudnn9-devel
 FROM nvidia/cuda:12.1.0-cudnn8-devel-ubuntu22.04
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -50,10 +51,21 @@ RUN set -x && apt-get update -q && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab && \
-    /opt/conda/bin/conda install -n base --yes pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia && \
+    # /opt/conda/bin/conda install -n base --yes pytorch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 pytorch-cuda=12.1 -c pytorch -c nvidia && \
     # /opt/conda/bin/pip install --index-url https://download.pytorch.org/whl/cu121 torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 && \
-    # /opt/conda/bin/pip install --index-url https://download.pytorch.org/whl/cu121 torch==2.5.1 && \
+    /opt/conda/bin/pip install --index-url https://download.pytorch.org/whl/cu121 torch==2.5.1 && \
     /opt/conda/bin/pip cache purge && \
     /opt/conda/bin/conda clean -afy && \
     mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
+
+# docker run -ti --rm \
+# --gpus '"device=6, 7"' \
+# --ulimit memlock=-1:-1 \
+# --ulimit stack=67108864 \
+# --security-opt seccomp=unconfined \
+# -e NVIDIA_DRIVER_CAPABILITIES=all \
+# -e OMP_NUM_THREADS=1 \
+# -e MKL_NUM_THREADS=1 \
+# -e OPENBLAS_NUM_THREADS=1 \
+# pytorch/pytorch:2.5.1-cuda12.1-cudnn9-devel bash
