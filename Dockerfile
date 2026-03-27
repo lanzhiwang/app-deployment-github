@@ -2,8 +2,15 @@ FROM nvidia/cuda:12.1.0-cudnn8-devel-ubuntu22.04
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
+ENV PATH /opt/conda/bin:$PATH
+
+CMD [ "/bin/bash" ]
+
+# Leave these args here to better use the Docker build cache
+ARG CONDA_VERSION=latest
+
 # hadolint ignore=DL3008
-RUN apt-get update -q && \
+RUN set -x && apt-get update -q && \
     apt-get install -q -y --no-install-recommends \
     bzip2 \
     ca-certificates \
@@ -19,18 +26,9 @@ RUN apt-get update -q && \
     vim \
     openssh-client \
     openssh-server \
-    systemd \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-ENV PATH /opt/conda/bin:$PATH
-
-CMD [ "/bin/bash" ]
-
-# Leave these args here to better use the Docker build cache
-ARG CONDA_VERSION=latest
-
-RUN set -x && \
+    systemd && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     UNAME_M="$(uname -m)" && \
     if [ "${UNAME_M}" = "x86_64" ]; then \
     MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh"; \
@@ -59,7 +57,8 @@ RUN set -x && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
     /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
     /opt/conda/bin/conda install -n base --yes jupyter_core notebook jupyterhub jupyterlab && \
-    /opt/conda/bin/conda install -n base --yes pytorch torchvision torchaudio -c pytorch -c nvidia && \
+    /opt/conda/bin/pip install --index-url https://download.pytorch.org/whl/cu121/ torch torchvision torchaudio && \
+    /opt/conda/bin/pip cache purge && \
     /opt/conda/bin/conda clean -afy && \
     mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
